@@ -13,6 +13,24 @@ chrome.runtime.onMessage.addListener(
             body.find('script').remove();
             body.find('iframe').remove();
             body.append(commonJS);
+            let speakers = body.find('.speaker').map((i, s) => {
+                const url = s.getAttribute('data-src-mp3');
+                let arr = url.split('/');
+                let filename = arr[arr.length - 1];
+                filename = filename.split('?')[0];
+                return {
+                    url,
+                    filename,
+                    skipHash: "7e2c2f954ef6051373ba916f000168dc",
+                    "fields": [
+                        // "Back"
+                    ]
+                };
+            });
+            speakers.each((i, s) => {
+                body.find(`span[data-src-mp3="${s.url}"]`).replaceWith(`[sound:${s.filename}]`);
+            });
+
 
             let front = $('.pagetitle').html();
             let back = head.html() + body.html();
@@ -35,14 +53,7 @@ chrome.runtime.onMessage.addListener(
                         "tags": [
                             "longman"
                         ],
-                        "audio": [{
-                            "url": body.find('.speaker.amefile')[0].getAttribute('data-src-mp3'),
-                            "filename": front + '.mp3',
-                            "skipHash": "7e2c2f954ef6051373ba916f000168dc",
-                            "fields": [
-                                "Back"
-                            ]
-                        }]
+                        "audio": speakers.toArray()
                     }
                 }
             };
