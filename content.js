@@ -28,7 +28,7 @@ chrome.runtime.onMessage.addListener(
                 };
             });
             speakers.each((i, s) => {
-                body.find(`span[data-src-mp3="${s.url}"]`).replaceWith(`[sound:${s.filename}]`);
+                body.find(`span[data-src-mp3="${s.url}"]`).replaceWith(`[sound:${s.url}]`);
             });
 
 
