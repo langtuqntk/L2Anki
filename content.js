@@ -21,6 +21,10 @@ chrome.runtime.onMessage.addListener(
                 return {
                     url,
                     filename,
+                    "skipHash": "7e2c2f954ef6051373ba916f000168dc",
+                    "fields": [
+                        "Back"
+                    ]
                 };
             });
             speakers.each((i, s) => {
@@ -49,6 +53,7 @@ chrome.runtime.onMessage.addListener(
                         "tags": [
                             "longman"
                         ],
+                        "audio": speakers.toArray()
                     }
                 }
             };
